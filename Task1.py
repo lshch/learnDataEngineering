@@ -102,7 +102,7 @@ print(missing_values)
 # Remove rows with price equal to 0
 airbnb_df = airbnb_df[airbnb_df['price'] > 0]
 
-print("----------- Line ------------")
+print("------------ Line -------------")
 
 airbnb_origin_df = pd.read_csv('AB_NYC_2019.csv')
 print_dataframe_info(airbnb_origin_df, "DataFrame before cleaning:")
