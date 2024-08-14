@@ -101,17 +101,33 @@ print(df_sorted)
 
 
 # Group by neighbourhood_group and calculate total listings and average price
-grouped_df = df.groupby('neighbourhood_group').agg({
+
+df2 = pd.read_csv('AB_NYC_2019.csv')
+
+grouped_df = df2.groupby('neighbourhood_group').agg({
     'id': 'count',  # Count the number of listings in each group
     'price': 'mean'   # Calculate the average price for each group
 })
+# Rename columns
+grouped_df = grouped_df.rename(columns={'id': 'total_listings', 'price': 'average_price'})
+
 
 # Create a ranking based on total listings and average price
-#grouped_df['ranking'] = grouped_df.apply(lambda x: (x['total_listings'] * 0.5 + x['average_price'] * 0.5), axis=1)
-#grouped_df = grouped_df.sort_values(by='ranking', ascending=False)
-#grouped_df['rank'] = grouped_df['ranking'].rank(ascending=False, method='dense')
+# Calculate ranking directly using the aggregated values
+#grouped_df['ranking'] = grouped_df['id'] * 0.5 + grouped_df['price'] * 0.5
 
-#print(grouped_df)
+# 1. Create a new column named 'ranking' in the grouped_df DataFrame.
+# 2. It uses the apply method with a lambda function.
+# 3. The lambda function takes a single argument x, which represents each row in the grouped DataFrame.
+# 4. Inside the function, it accesses values from columns named 'total_listings' and 'average_price'.
+grouped_df['ranking'] = grouped_df.apply(lambda x: (( x['average_price']+ x['total_listings']) / 2), axis=1)
+grouped_df = grouped_df.sort_values(by='ranking', ascending=False)
+# Calculating ranks:
+# .rank(ascending=False, method='dense') applies the rank function to the selected column
+grouped_df['rank'] = grouped_df['ranking'].rank(ascending=False, method='dense')
 
+print_dataframe_info(grouped_df, "Group by neighbourhood_group and calculate total listings and average price:")
+print(grouped_df)
+grouped_df.to_csv('aggregated_airbnb_data.csv', index=True)
 
 
