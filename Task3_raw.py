@@ -72,14 +72,14 @@ monthly_trends = pd.DataFrame({'Number_of_Reviews': monthly_reviews, 'Average_Pr
 print_dataframe_info(monthly_trends, "Monthly trends in number of reviews and average price:")
 
 # Plot the number of reviews
-monthly_trends['Number_of_Reviews'].plot(figsize=(12, 6), title='Monthly Number of Reviews')
+monthly_trends['Number_of_Reviews'].plot(figsize=(6, 6), title='Monthly Number of Reviews')
 plt.ylabel('Number of Reviews')
-#plt.show()
+plt.show()
 
 # Plot the average price
 monthly_trends['Average_Price'].plot(figsize=(12, 6), title='Monthly Average Price')
 plt.ylabel('Average Price')
-#plt.show()
+plt.show()
 
 import matplotlib.pyplot as plt
 
